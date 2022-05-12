@@ -35,7 +35,7 @@ public final class StorageBatch {
 
     private var _storage: [(type: BatchType, file: File)] = []
 
-    var timeout: Int = 10 // Default 10s
+    public var timeout: Int = 60 // Default 10s
 
     public init() { }
 
