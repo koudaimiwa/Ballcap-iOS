@@ -142,9 +142,7 @@ public final class DataSource<T: Object & DataRepresentable>: ExpressibleByArray
     /// Start monitoring data source.
     @discardableResult
     public func listen() -> Self {
-        if listener != nil {
-            return self
-        }
+
         self.listener = self.query.listen(includeMetadataChanges: true, listener: { [weak self] (snapshot, error) in
             guard let `self` = self else { return }
             guard let snapshot: QuerySnapshot = snapshot else {
@@ -277,6 +275,7 @@ public final class DataSource<T: Object & DataRepresentable>: ExpressibleByArray
     public func get(_ block: ((Bool) -> Void)? = nil) -> Self {
         let changedBlock: ChangedBlock? = self._changedBlock
         let before: [Element] = self.documents
+        self.query = self.originalQuery
         self.originalQuery.get { (snapshot, error) in
             guard let lastSnapshot = snapshot?.documents.last else {
                 // The collection is empty.
@@ -286,9 +285,9 @@ public final class DataSource<T: Object & DataRepresentable>: ExpressibleByArray
                 changedBlock?(nil, dataSourceSnapshot)
                 return
             }
+            self.listen()
             self.query = self.query.start(afterDocument: lastSnapshot)
             block?(false)
-            self._execute(snapshot: snapshot!)
         }
         return self
     }
@@ -309,9 +308,9 @@ public final class DataSource<T: Object & DataRepresentable>: ExpressibleByArray
                 changedBlock?(nil, dataSourceSnapshot)
                 return
             }
+            self.listen()
             self.query = self.query.start(afterDocument: lastSnapshot)
             block?(false)
-            self._execute(snapshot: snapshot!)
         }
         return self
     }
