@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
 s.name         = "Ballcap"
-s.version      = "1.3.9"
+s.version      = "1.3.11"
 s.summary      = "Firestore design framework"
 s.swift_version = "5"
 s.description  = <<-DESC
@@ -18,7 +18,7 @@ s.source       = { :git => "https://github.com/1amageek/Ballcap-iOS.git", :tag =
 s.source_files  = "Ballcap/**/*.swift"
 s.requires_arc = true
 s.static_framework = true
-s.dependency "Firebase"
+s.dependency "Firebase", '10.5.0'
 s.dependency "Firebase/Firestore", '10.5.0'
 s.dependency "Firebase/Storage", '10.5.0'
 s.dependency "FirebaseFirestoreSwift", '10.5.0'
