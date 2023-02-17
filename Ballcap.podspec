@@ -19,7 +19,7 @@ s.source_files  = "Ballcap/**/*.swift"
 s.requires_arc = true
 s.static_framework = true
 s.dependency "Firebase"
-s.dependency "Firebase/Firestore"
-s.dependency "Firebase/Storage"
-s.dependency "FirebaseFirestoreSwift"
+s.dependency "Firebase/Firestore", '10.5.0'
+s.dependency "Firebase/Storage", '10.5.0'
+s.dependency "FirebaseFirestoreSwift", '10.5.0'
 end
