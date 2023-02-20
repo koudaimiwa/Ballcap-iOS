@@ -13,7 +13,8 @@ import FirebaseStorage
 public extension DataSource {
 
     class Query {
-
+        
+        public typealias QuerySnapshotBlock = (QuerySnapshot?, Error?) -> Void
         public private(set) var _originalQuery: FirebaseFirestore.Query
 
         public private(set) var query: FirebaseFirestore.Query
@@ -116,11 +117,11 @@ public extension DataSource {
             return Query(query.end(beforeDocument: beforeDocument), reference: self._originalQuery)
         }
 
-        public func listen(includeMetadataChanges: Bool = true, listener: @escaping FIRQuerySnapshotBlock) -> ListenerRegistration {
+        public func listen(includeMetadataChanges: Bool = true, listener: @escaping QuerySnapshotBlock) -> ListenerRegistration {
             return query.addSnapshotListener(includeMetadataChanges: includeMetadataChanges, listener: listener)
         }
 
-        public func get(completion: @escaping FIRQuerySnapshotBlock) {
+        public func get(completion: @escaping QuerySnapshotBlock) {
             query.getDocuments(completion: completion)
         }
     }
